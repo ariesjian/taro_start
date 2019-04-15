@@ -6,7 +6,7 @@ interface HomeState {
 
 export default class Matchdata extends Component<{}, HomeState> {
   config: Config = {
-    navigationBarTitleText: '料到体育',
+    navigationBarTitleText: 'start',
     enablePullDownRefresh:false
   }
 
