@@ -22,7 +22,6 @@ export default class Star extends Component<{}, StarState> {
   componentWillMount() {
 
   }
-
   /*  componentDidMount() {
       const { dispatch } = this.props;
       dispatch({
