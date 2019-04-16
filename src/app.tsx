@@ -50,16 +50,17 @@ class App extends Component {
       list: [
         {
           pagePath: 'pages/index/index',
-          text: '足球',
-          iconPath: './assets/tab_football@3x.png',
-          selectedIconPath: './assets/tab_lightvideo@3x.png',
-        },
-        {
-          pagePath: 'pages/matchdata/index',
-          text: '数据',
+          text: '星球',
           iconPath: './assets/tab_date@3x.png',
           selectedIconPath: './assets/tab_lightdate@3x.png',
         },
+        {
+          pagePath: 'pages/matchdata/index',
+          text: '首页',
+          iconPath: './assets/tab_football@3x.png',
+          selectedIconPath: './assets/tab_lightvideo@3x.png',
+        },
+
       ],
       color: '#A9ACB0',
       selectedColor: '#EB5454',
