@@ -1,0 +1,71 @@
+.home_container{
+  width: 750rpx;
+  height: 100%;
+  //background: #666666;
+  .star_box{
+    width: 750rpx;
+    height:800rpx;
+    //background: #333333;
+    perspective: 3000px;
+    perspective-origin: 50% 50%;
+  }
+  .boll_box{
+    width:500rpx;
+    height:500rpx;
+    margin: 100rpx auto;
+    transform-style: preserve-3d;
+    position: relative;
+    animation: move 30s linear infinite; // todo 这个是需要注释掉的
+  }
+  @keyframes move
+  {
+    100% { transform:  rotateX(360deg) rotateY(360deg) }
+  }
+  .circle{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 500rpx;
+    height: 500rpx;
+    border-radius: 50%;
+    transform: translate3d(0rpx,0rpx,-250rpx);
+    //background-color: pink;
+    opacity: 0.5;
+    text-align: center;
+    line-height: 500rpx;
+    font-size: 30rpx;
+    color: #fff;
+  }
+  .circle2{
+    transform: rotateY(72deg);
+    background-color: blue;
+    opacity: 0.5;
+  }
+  .circle3{
+    transform: rotateY(144deg);
+    background-color: green;
+    opacity: 0.5;
+  }
+  .circle4{
+    transform: rotateY(216deg);
+    background-color: orange;
+    opacity: 0.5;
+  }
+  .circle5{
+    transform: rotateY(288deg);
+    background-color: red;
+    opacity: 0.5;
+  }
+  .circle6{
+    transform: rotateY(360deg);
+    background-color: yellow;
+    opacity: 0.5;
+  }
+
+
+  .wish{
+   height: 10%;
+    width: 750rpx;
+    text-align: center;
+  }
+}
