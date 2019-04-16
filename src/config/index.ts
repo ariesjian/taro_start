@@ -14,7 +14,7 @@ if(IS_DEV){
 //
 
    //线上
-  BASE_URL = 'http://baidu.com'
+  BASE_URL = 'https://api.douban.com'
   // BaseWs = 'http://baidu.com'
   // BaseIps = 'http://baidu.com'
   // StaticFileUrl='http://baidu.com'
@@ -23,7 +23,7 @@ if(IS_DEV){
 
 }else{
   //线上
-  BASE_URL = 'https://taobao.com'
+  BASE_URL = 'https://api.douban.com'
   // BaseWs = 'https://taobao.com'
   // BaseIps ='https://taobao.com'
   // StaticFileUrl='https://taobao.com'

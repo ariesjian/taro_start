@@ -1,11 +1,12 @@
 import Taro, {Component, Config} from '@tarojs/taro'
 import {View, MovableArea, MovableView, Image} from '@tarojs/components'
+import {connect} from '@tarojs/redux'
 import './index.less'
 
-interface HomeState {
-
-}
-
+@connect(({home}) => ({
+  ...home,
+  home,
+}))
 export default class Matchdata extends Component<{}, HomeState> {
   config: Config = {
     navigationBarTitleText: 'start',
@@ -21,7 +22,19 @@ export default class Matchdata extends Component<{}, HomeState> {
   }
 
   componentDidMount() {
-
+    const { dispatch } = this.props;
+    dispatch({
+      type: 'home/fetch',
+      payload: {
+        apikey:'0b2bdeda43b5688921839c8ecb20399b',
+        city:'北京',
+        start:0,
+        count:20,
+      },
+      callback:()=>{
+        console.log('成功了')
+      }
+    })
   }
 
   //星星渲染
@@ -103,6 +116,10 @@ export default class Matchdata extends Component<{}, HomeState> {
 
   render() {
     const {starts} = this.state;
+    const {
+      home,
+    } = this.props;
+    console.log(home,'---1妈妈咪1: { homeList }---');
     return (
       <View className='page_container'>
         <View className='star_box'>
@@ -111,7 +128,7 @@ export default class Matchdata extends Component<{}, HomeState> {
               {starts.length && starts.map((v, index) => {
                 return (
                   <View className='starts' key={index} style={{left: v.left, top: v.top}}>
-                    <Image id={v+'star'} src={require('../../assets/starton.png')} className='pic_star'/>
+                    <Image id={v + 'star'} src={require('../../assets/starton.png')} className='pic_star'/>
                   </View>
                 )
               })}

@@ -1,5 +1,5 @@
-import main from './main'
+import home from './home'
 
 export default [
-  main
+  home
 ]
