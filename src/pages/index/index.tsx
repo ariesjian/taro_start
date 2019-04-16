@@ -1,6 +1,6 @@
 import Taro, {Component, Config} from '@tarojs/taro'
 // 引入 MovableArea, MovableView 组件
-import {MovableArea, MovableView, View} from '@tarojs/components'
+import {View} from '@tarojs/components'
 import './index.less'
 
 interface HomeState {

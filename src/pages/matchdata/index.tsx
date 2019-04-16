@@ -1,5 +1,5 @@
 import Taro, {Component, Config} from '@tarojs/taro'
-import {View, MovableArea, MovableView, Image, Block} from '@tarojs/components'
+import {View, MovableArea, MovableView, Image} from '@tarojs/components'
 import './index.less'
 
 interface HomeState {
