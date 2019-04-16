@@ -3,39 +3,41 @@ import {View, MovableArea, MovableView, Image} from '@tarojs/components'
 import {connect} from '@tarojs/redux'
 import './index.less'
 
+interface StarState {
+  starList: Array<any>
+}
 @connect(({home}) => ({
   ...home,
   home,
 }))
-export default class Matchdata extends Component<{}, HomeState> {
+export default class Star extends Component<{}, StarState> {
   config: Config = {
     navigationBarTitleText: 'start',
     enablePullDownRefresh: false
   }
-
   state = {
-    starts: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+    starList: [{id: 1, left: '100rpx', top: '100rpx', transformX: '10', trancformY: '20'}],
   }
 
   componentWillMount() {
 
   }
 
-  componentDidMount() {
-    const { dispatch } = this.props;
-    dispatch({
-      type: 'home/fetch',
-      payload: {
-        apikey:'0b2bdeda43b5688921839c8ecb20399b',
-        city:'北京',
-        start:0,
-        count:20,
-      },
-      callback:()=>{
-        console.log('成功了')
-      }
-    })
-  }
+  /*  componentDidMount() {
+      const { dispatch } = this.props;
+      dispatch({
+        type: 'home/fetch',
+        payload: {
+          apikey:'0b2bdeda43b5688921839c8ecb20399b',
+          city:'北京',
+          start:0,
+          count:20,
+        },
+        callback:()=>{
+          console.log('成功了')
+        }
+      })
+    }*/
 
   //星星渲染
   CoinsRender(CoinAry) {
@@ -61,7 +63,7 @@ export default class Matchdata extends Component<{}, HomeState> {
         // _this.starts = _this.RandomMoneyMake(CoinAry, obj);
         // _this.$apply();
         _this.setState({
-          starts: _this.RandomMoneyMake(CoinAry, obj)
+          starList: _this.RandomMoneyMake(CoinAry, obj)
         })
       })
       .exec();
@@ -115,20 +117,19 @@ export default class Matchdata extends Component<{}, HomeState> {
   };
 
   render() {
-    const {starts} = this.state;
+    const {starList} = this.state;
     const {
-      home,
+      home: {homeList},
     } = this.props;
-    console.log(home,'---1妈妈咪1: { homeList }---');
     return (
       <View className='page_container'>
         <View className='star_box'>
           <MovableArea style='height: 200px; width: 200px; background: blue;'>
             <MovableView className='star_view' style='height: 1000px; width: 1000px;' direction='all'>
-              {starts.length && starts.map((v, index) => {
+              {starList.length && starList.map((v, index) => {
                 return (
                   <View className='starts' key={index} style={{left: v.left, top: v.top}}>
-                    <Image id={v + 'star'} src={require('../../assets/starton.png')} className='pic_star'/>
+                    <Image id={v.id + 'star'} src={require('../../assets/starton.png')} className='pic_star'/>
                   </View>
                 )
               })}
