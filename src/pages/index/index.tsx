@@ -21,12 +21,9 @@ export default class Index extends Component<{}, HomeState> {
   }
 
   state = {
-    starts: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
     xStart: 0,
     yStart: 0,
     transform: '',
-    // xEnd:0,
-    // yEnd:0,
   };
 
   componentWillMount() {
@@ -80,7 +77,8 @@ export default class Index extends Component<{}, HomeState> {
                 style={{transform: this.state.transform}}
                 onTouchMove={this.touchMove}
                 onTouchStart={this.touchStart}
-                onTouchEnd={this.touchEnd}>
+                onTouchEnd={this.touchEnd}
+          >
             <View className="circle circle1"/>
             <View className="circle circle2"/>
             <View className="circle circle3"/>
