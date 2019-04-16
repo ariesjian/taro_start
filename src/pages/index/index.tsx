@@ -105,7 +105,7 @@ export default class Index extends Component<{}, HomeState> {
    * contdata-容器的data
    */
   RandomMoneyMake(coinlist, contdata) {
-    let CoinList = this.CoinList;
+    let CoinList = this.state.starts;
     console.log(coinlist, 'coinlist');
     console.log(contdata, 'contdata');
     let getAry = coinlist;
@@ -160,6 +160,7 @@ export default class Index extends Component<{}, HomeState> {
             <View className="circle circle5"/>
             <View className="circle circle6"/>
             <View className='stars'>*</View>
+
           </View>
 
         </View>
