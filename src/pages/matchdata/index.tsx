@@ -4,7 +4,10 @@ import {connect} from '@tarojs/redux'
 import './index.less'
 
 interface StarState {
-  starList: Array<any>
+  starList: Array<any>,
+  disabled?: boolean,
+  leftStart:any,
+  topStart:any,
 }
 @connect(({home}) => ({
   ...home,
@@ -13,10 +16,22 @@ interface StarState {
 export default class Star extends Component<{}, StarState> {
   config: Config = {
     navigationBarTitleText: 'start',
-    enablePullDownRefresh: false
+    enablePullDownRefresh: false,
   }
-  state = {
-    starList: [{id: 1, left: '100rpx', top: '100rpx', transformX: '10', trancformY: '20'}],
+  constructor(props: {} | undefined) {
+    super(props);
+    const starList = [
+      {id: 0, left: '150rpx', top: '120rpx', x: 10, y: 10 },
+      {id: 1, left: '140rpx', top: '100rpx', x: 10, y: 10 },
+      {id: 2, left: '400rpx', top: '190rpx', x: 10, y: 10 },
+      {id: 3, left: '300rpx', top: '103rpx', x: 10, y: 10},
+      {id: 4, left: '50rpx', top: '603rpx', x: 10, y: 10}];
+    this.state = {
+      starList: this.styleStart(starList),
+      disabled: false,
+      leftStart:0,
+      topStart:0,
+    }
   }
 
   componentWillMount() {
@@ -37,104 +52,93 @@ export default class Star extends Component<{}, StarState> {
         }
       })
     }*/
-
-  //星星渲染
-  CoinsRender(CoinAry) {
-    const _this = this;
-    wx.createSelectorQuery()
-      .selectAll('.star_view')
-      .boundingClientRect(function (rects) {
-        rects.forEach(function (rect) {
-          rect.id; // 节点的ID
-          rect.dataset; // 节点的dataset
-          rect.left; // 节点的左边界坐标
-          rect.right; // 节点的右边界坐标
-          rect.top; // 节点的上边界坐标
-          rect.bottom; // 节点的下边界坐标
-          rect.width; // 节点的宽度
-          rect.height; // 节点的高度
-        });
-        let obj = {
-          width: rects[0]['width'] * 2,
-          height: rects[0]['height'] * 2
-        };
-        console.log(obj, '==========');
-        // _this.starts = _this.RandomMoneyMake(CoinAry, obj);
-        // _this.$apply();
-        _this.setState({
-          starList: _this.RandomMoneyMake(CoinAry, obj)
-        })
-      })
-      .exec();
-  }
-
-  /***
-   * RandomMoneyMake-随机生成节点位置
-   * coinlist-金币数组
-   * contdata-容器的data
-   */
-  RandomMoneyMake(coinlist, contdata) {
-    let getAry = coinlist;
-    let CoinCont = {
-      width: contdata.width,
-      height: contdata.height
-    };
-    let coin = {
-      width: 120,
-      height: 120
-    };
-    let arr = [];
-    getAry.map((item, index) => {
-      let obj = item;
-      let position = {
-        left: U.RandomNum(10, CoinCont.width - coin.width / 2 - 100),
-        top: U.RandomNum(220, CoinCont.height - coin.height / 2 - 100),
-        opacity: 1,
-        translateX: 0,
-        translateY: 0,
-        coinId: index,
-        isOn: true,
-        // ImgUrl:item.category===8?`../../images/changePf/coin1.png`:`../../images/changePf/coin3.png`,
-        // ImgUrl:item.category===8?`../../images/home/icon_home_lucky_0${Math.round(Math.random()*2 + 1)}.png`:`../../images/home/coin${Math.round(Math.random()*5 + 1)}.png`,
-        showType: true
-      };
-      obj = Object.assign({}, obj, position);
-      arr.push(obj);
-    });
-    console.log(arr, 'arr');
-    return arr;
-  }
-
-  // 星星样式处理
-  styleStart = (arr) => {
-    arr.map(v => {
-      return {
-        left: U.RandomNum(v, 1000),
-        top: U.RandomNum(v * 2, 500),
+  // 星星位置的随机定位处理
+  styleStart=(arr)=>{
+    return arr.map(v=>{
+      return{
+        ...v,
+        left:Math.floor(Math.random()*(707-293)+293),// 首屏随机值
+        top:Math.floor(Math.random()*(762-238)+238)// 首屏随机值
       }
     })
   };
+// 拖动星星开始
+   tounchstart=(e)=>{
+     console.log(e,'===start===')
+      this.setState({
+        disabled: true,
+        leftStart:this.state.starList[e.currentTarget.id].left,
+        topStart:this.state.starList[e.currentTarget.id].top,
+      });
+    }
 
+// 拖动星星中
+  tounchmove=(e)=>{
+     console.log(e,'===ing===');
+    let xx = 0, yy = 0;
+    const {leftStart,topStart,starList}=this.state;
+    const xEnd = e.changedTouches[0].pageX ;//获取鼠标移动时第一个点的坐标
+    const yEnd = e.changedTouches[0].pageY;
+    xx += xEnd - leftStart;//获得鼠标移动的距离
+    yy += yEnd - topStart;
+    let newArr=starList;
+    newArr[e.currentTarget.id].left=xx;
+    newArr[e.currentTarget.id].top=yy;
+    //将旋转角度写入transform中
+    console.log(newArr,e.currentTarget.id,'------newArr----', newArr[e.currentTarget.id].left)
+    this.setState({
+      disabled: true,
+      starList:newArr,
+    })
+
+  }
+ // 拖动星星结束
+  touchend=(e)=>{
+    let xx = 0, yy = 0;
+    const {leftStart,topStart,starList}=this.state;
+    const xEnd = e.changedTouches[0].pageX ;//获取鼠标移动时第一个点的坐标
+    const yEnd = e.changedTouches[0].pageY;
+    xx += xEnd + leftStart;//获得鼠标移动的距离
+    yy += yEnd + topStart;
+    let newArr=starList;
+    newArr[e.currentTarget.id].left=xx;
+    newArr[e.currentTarget.id].top=yy;
+    //将旋转角度写入transform中
+    this.setState({
+      disabled: false,
+      starList:newArr,
+    })
+  }
   render() {
-    const {starList} = this.state;
+    const {starList, disabled} = this.state;
     const {
       home: {homeList},
     } = this.props;
+    console.log(starList, '---')
     return (
       <View className='page_container'>
         <View className='star_box'>
-          <MovableArea style='height: 200px; width: 200px; background: blue;'>
-            <MovableView className='star_view' style='height: 1000px; width: 1000px;' direction='all'>
+          <MovableArea style='height: 524px; width: 414px; background: blue; overflow:hidden;'>
+            <MovableView
+              className='star_view'
+              style='height: 1000px; width: 1000px;'
+              direction='all'
+              x={-293}
+              y={-238}
+              out-of-bounds
+              disabled={disabled}
+            >
               {starList.length && starList.map((v, index) => {
                 return (
-                  <View className='starts' key={index} style={{left: v.left, top: v.top}}>
-                    <Image id={v.id + 'star'} src={require('../../assets/starton.png')} className='pic_star'/>
+                  <View id={v.id} className='starts' key={index} style={{left: `${v.left}px`, top: `${v.top}px`}}
+                        onTouchMove={this.tounchmove.bind(this)}
+                        onTouchStart={this.tounchstart.bind(this)}
+                        onTouchEnd={this.touchend.bind(this)}
+                  >
+                    <Image  src={require('../../assets/starton.png')} className='pic_star'/>
                   </View>
                 )
               })}
-              <View className='starts1' key={index}>
-                <Image src={require('../../assets/starton.png')} className='pic_star'/>
-              </View>
             </MovableView>
           </MovableArea>
         </View>
