@@ -71,7 +71,6 @@ export default class Star extends Component<{}, StarState> {
         topStart:this.state.starList[e.currentTarget.id].top,
       });
     }
-
 // 拖动星星中
   tounchmove=(e)=>{
      console.log(e,'===ing===');
