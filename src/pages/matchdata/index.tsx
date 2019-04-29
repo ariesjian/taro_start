@@ -46,21 +46,6 @@ export default class Star extends Component<{}, StarState> {
 
   }
 
-  /*  componentDidMount() {
-      const { dispatch } = this.props;
-      dispatch({
-        type: 'home/fetch',
-        payload: {
-          apikey:'0b2bdeda43b5688921839c8ecb20399b',
-          city:'北京',
-          start:0,
-          count:20,
-        },
-        callback:()=>{
-          console.log('成功了')
-        }
-      })
-    }*/
   // 星星位置的随机定位处理
   styleStart = (arr) => {
     return arr.map(v => {
